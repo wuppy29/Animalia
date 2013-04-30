@@ -60,10 +60,16 @@ public class EventManager implements ICraftingHandler, IFuelHandler, IWorldGener
 	@Override
 	public void onPlayerLogin(EntityPlayer player) 
 	{
-		if(Animalia.isNewestRecommendedBuild())
-			player.addChatMessage(TextColor.GOLD.getColorString() + "You have the most current version of the Animalia mod installed");
+		System.out.println(Animalia.currentRecBuild);
+		if(Animalia.currentRecBuild.contentEquals(""))
+			player.addChatMessage(TextColor.RED.getColorString() + "Couldn't connect to check for updates");
 		else
-			player.addChatMessage(TextColor.RED.getColorString() + "You do not have the most recent recommended build of Animalia installed. The most recent version is: " + Animalia.getCurrentRecommendedBuild()+ "; however, your current version is: " + Animalia.metadata.version);
+		{
+			if(Animalia.isNewestRecommendedBuild())
+				player.addChatMessage(TextColor.GOLD.getColorString() + "You have the most current version of the Animalia mod installed");
+			else
+				player.addChatMessage(TextColor.RED.getColorString() + "You do not have the most recent recommended build of Animalia installed. The most recent version is: " + Animalia.getCurrentRecommendedBuild()+ "; however, your current version is: " + Animalia.metadata.version);
+		}
 	}
 
 	@Override
@@ -121,9 +127,9 @@ public class EventManager implements ICraftingHandler, IFuelHandler, IWorldGener
 	private void generateSurface(World world, Random random, int blockX, int blockZ) 
 	{
 		//Full Documentation for this Helper methods found below.
-		this.addOreSpawn(Animalia.fossilEP, world, random, blockX, blockZ, 16, 16, 15, 1, 20);
-		this.addOreSpawn(Animalia.fossilLP, world, random, blockX, blockZ, 16, 16, 15, 1, 20, 40);
-		this.addOreSpawn(Animalia.fossilMesozoic, world, random, blockX, blockZ, 16, 16, 15, 1, 40, 60);
+		this.addOreSpawn(Animalia.fossilEP, world, random, blockX, blockZ, 16, 16, 4 + random.nextInt(3), 1, 20);
+		this.addOreSpawn(Animalia.fossilLP, world, random, blockX, blockZ, 16, 16, 4 + random.nextInt(3), 1, 20, 40);
+		this.addOreSpawn(Animalia.fossilMesozoic, world, random, blockX, blockZ, 16, 16, 4 + random.nextInt(3), 1, 40, 60);
 		
 		this.addOreSpawn(Animalia.crystal4DOre, world, random, blockX, blockZ, 16, 16, 1, 1, 6);
 	}

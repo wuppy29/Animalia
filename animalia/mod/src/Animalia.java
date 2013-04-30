@@ -146,6 +146,8 @@ public class Animalia
 	public static Block extractorOff;
 	public static Block extractorOn;
 	
+	public static String currentRecBuild = getCurrentRecommendedBuild();
+	
 	@PreInit
 	public void loadPre(FMLPreInitializationEvent event)
 	{	
@@ -371,13 +373,10 @@ public class Animalia
 
 	public static boolean isNewestRecommendedBuild() 
 	{
-		String currentRecBuild = getCurrentRecommendedBuild();
-		boolean isMostRecentVer = false;
-		String secDiv = "\\.";
-		int[] currInstallVer = convertToIntArray(metadata.version.split(secDiv));
-		int[] mostRecentVer = convertToIntArray(currentRecBuild.split(secDiv));
-		isMostRecentVer = isSameVersion(currInstallVer, mostRecentVer);
-		return isMostRecentVer;
+		if(metadata.version.contentEquals(currentRecBuild))
+			return true;
+		else
+			return false;
 	}
 
 	private static int[] convertToIntArray(String[] split) 
